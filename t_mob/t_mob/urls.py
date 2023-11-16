@@ -20,5 +20,5 @@ from mi_app.views import TuVista
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ruta/<str:key>/', TuVista.as_view(), name='ejercicio t-mob'),
+    path('t-mob-app/<str:key>/', TuVista.as_view()),
 ]
