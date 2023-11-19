@@ -1,16 +1,17 @@
+# models.py
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
-
-class MiModelo(models.Model):
-    key = models.CharField(max_length=50)
-    url = models.CharField(max_length=200)
+class MyModel(models.Model):
+    key = models.CharField(max_length=255, unique=True)
+    url = models.URLField()
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-def get_redirect(key):
-    try:
-        return MiModelo.objects.get(key=key)
-    except MiModelo.DoesNotExist:
-        return {"error": "No se encontró la llave: {}".format(key)}
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.key
